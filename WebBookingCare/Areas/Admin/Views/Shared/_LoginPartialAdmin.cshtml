@@ -1,0 +1,11 @@
+﻿@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 font-weight-bold">Đăng Xuất</span>
+        </a>
+    }
+}

@@ -1,0 +1,141 @@
+﻿@model WebBookingCare.Models.EF.DonNghiPhep
+
+@{
+    ViewBag.Title = "Đăng ký nghỉ phép";
+    Layout = "~/Areas/Doctor/Views/Shared/_LayoutDoctor.cshtml";
+}
+
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">ĐĂNG KÝ NGHỈ PHÉP</h4>
+    <hr />
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="d-flex justify-content-center">
+            <div class="col-md-10">
+
+                <div class="card">
+                    <div class="Thongtinbn m-5">
+                        <div class="row">
+                            <div class="col-4 p-3">
+                                <span class="font-weight-bold">Tên bác sĩ:</span> @ViewBag.BacSi.HoTen
+                            </div>
+
+                            <div class="col-4 p-3">
+                                <span class="font-weight-bold">Email:</span> @ViewBag.BacSi.User.Email
+                            </div>
+                            <div class="col-4 p-3">
+                                <span class="font-weight-bold">SDT</span> @ViewBag.BacSi.Sdt
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgayNghi, htmlAttributes: new { @class = "font-weight-bold control-label col-md-2" })
+                            <div class="col-md-10">
+                                @{
+                                    DateTime today = DateTime.Now.Date;
+                                    DateTime endDate = today.AddDays(15);
+                                    List<SelectListItem> nghiOptions = new List<SelectListItem>();
+
+                                   // Danh sách các ngày đã đăng ký nghỉ
+                                    List<DateTime> daDangKyNghi = ViewBag.DaDangKyNghi; // Chỉnh sửa tên danh sách tương ứng trong mô hình
+
+                                    for (DateTime date = today; date <= endDate; date = date.AddDays(1))
+                                    {
+                                        // Kiểm tra xem ngày đã được đăng ký nghỉ hay chưa
+                                        bool isDaDangKyNghi = daDangKyNghi.Contains(date);
+
+                                        if (!isDaDangKyNghi)
+                                        {
+                                            nghiOptions.Add(new SelectListItem { Text = date.ToString("MM/dd/yyyy"), Value = date.ToString("yyyy-MM-dd") });
+                                        }
+                                    }
+                                }
+
+                                @Html.DropDownListFor(model => model.NgayNghi, nghiOptions, "Chọn ngày nghỉ", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.NgayNghi, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="font-weight-bold control-label col-md-2">Buổi nghỉ </span>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>
+                                            <input type="checkbox" id="selectAllCa" /> Cả ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>
+                                            <input type="checkbox" id="selectAllCa" /> Buổi sáng
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>
+                                            <input type="checkbox" id="selectAllCa" /> Buổi chiều
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="font-weight-bold control-label col-md-2">Chọn ca</span>
+                            <div class="col-md-10">
+                                @foreach (var caKham in ViewBag.CaKhamList)
+                                {
+                                    <div>
+                                        <label>
+                                            @{
+                                                bool isChecked = false;
+                                            }
+                                            @Html.CheckBoxFor(model => isChecked, new { value = caKham, name = "cakham" }) @caKham.TenCa : @caKham.ThoiGianBD - @caKham.ThoiGianKT
+                                        </label>
+                                    </div>
+                                }
+                                @Html.ValidationMessageFor(model => model.CaNghi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="col-md-offset-2 col-md-12">
+                                <input type="submit" value="Gửi" class="btn btn-success w-100 h-100" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        // Bắt sự kiện khi checkbox "Chọn tất cả" thay đổi
+        $("#selectAllCa").change(function () {
+            var selectAll = $(this).is(":checked");
+
+            // Đặt trạng thái của các checkbox ca khám
+            $("input[name='cakham']").prop("checked", selectAll);
+        });
+
+        // Bắt sự kiện khi checkbox ca khám thay đổi
+        $("input[name='cakham']").change(function () {
+            // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
+            var allChecked = $("input[name='cakham']").length === $("input[name='cakham']:checked").length;
+
+            // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
+            $("#selectAllCa").prop("checked", allChecked);
+        });
+    });
+</script>
+
+
+
+
+
+

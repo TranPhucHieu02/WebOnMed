@@ -1,0 +1,147 @@
+﻿
+
+@model IEnumerable<WebBookingCare.Models.EF.PhieuDatLich>
+
+@{
+    ViewBag.Title = "DANH SÁCH LỊCH KHÁM";
+    Layout = "~/Areas/Doctor/Views/Shared/_LayoutDoctor.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">DANH SÁCH LỊCH KHÁM</h4>
+    <hr />
+</div>
+<div class="noidung m-3">
+    <table class="PDL table table-bordered display " id="PDL">
+
+        <thead>
+            <tr>
+
+                <th>
+                    Bệnh Nhân
+                </th>
+                <th>
+                    Ngày Khám
+                </th>
+                <th>
+                    Ca Khám
+                </th>
+                <th>
+                    Thời Gian
+                </th>
+                <th>
+                    Trạng Thái
+                </th>
+                <th>
+                    Chức Năng
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenBN)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayKham)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CaKham.TenCa)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CaKham.ThoiGianBD)-@Html.DisplayFor(modelItem => item.CaKham.ThoiGianKT)
+
+                    </td>
+                    <td>
+                        <span>Chưa khám</span>
+                    </td>
+                    <td>
+                        @*<a href="/Doctor/PhieuDatLich/ChiTietKhamBenh/@item.MaPDL" class="btn btn-outline-success btn-sm toggle-account-status"
+                               data-userid="@item.MaPDL" data-status="unlocked">
+                                <i class="fas fa-plus"></i>
+                            </a>*@
+                        <a href="/Doctor/PhieuDatLich/ChiTietKhamBenh/@item.MaPDL" class="btn btn-outline-primary btn-sm toggle-account-status"
+                           data-userid="@item.MaPDL" data-status="kham">
+                            <i class="fas fa-edit"></i> <!-- Biểu tượng sửa -->
+                        </a>
+                        <button type="button" class="btn btn-outline-danger btn-sm click-pdl"
+                           data-userid="@item.MaPDL" data-status="huy">
+                            <i class="fas fa-trash"></i> <!-- Biểu tượng xóa -->
+                        </button>
+
+                        @*<a href="/Doctor/PhieuDatLich/ChiTietKhamBenh/@item.MaPDL" class="btn btn-outline-warning btn-sm toggle-account-status"
+                        data-userid="@item.MaPDL" data-status="unlocked">
+                         <i class="fas fa-times"></i>
+                         Biểu tượng hủy 
+                        </a>*@
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section datatable
+    {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PDL').DataTable({
+                "drawCallback": function (settings) {
+                    $('.click-pdl').click(function (event) {
+                        event.preventDefault();
+                        var btn = $(this);
+                        var maPDL = btn.data('userid');
+                        var status = btn.data('status');
+                        var url = '/doctor/phieudatlich/duyetlich';
+                        var data = { maPDL: maPDL, status: status };
+                        var row = btn.closest('tr'); // Lấy dòng chứa nút được nhấp vào
+                        if (status === 'huy') {
+                            Swal.fire({
+                                title: 'Bạn chắc chắn muốn xóa?',
+                                text: 'Hành động này không thể hoàn tác!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Đồng ý',
+                                cancelButtonText: 'Hủy bỏ'
+                            }).then(function (result) {
+                                if (result.value) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: url,
+                                        data: data,
+                                        success: function (result) {
+                                            if (result.success) {
+                                                row.hide();
+                                            } else {
+                                                alert(result.message);
+                                            }
+                                        },
+                                        error: function () {
+                                            alert('Đã xảy ra lỗi khi thực hiện hành động.');
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        
+
+                    });
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,40 @@
+﻿<section id="counts" class="counts section-bg">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="count-box">
+                    <i class="fas fa-user-md"></i>
+                    <span data-purecounter-start="0" data-purecounter-end="@Convert.ToDecimal(ViewBag.BacSi).ToString("#,##0")" data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Bác sĩ</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+                <div class="count-box">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <span data-purecounter-start="0" data-purecounter-end="@Convert.ToDecimal(ViewBag.DichVu).ToString("#,##0")" data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Dịch vụ</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">    
+                <div class="count-box">
+                    <i class="fas fa-house-medical"></i>
+                    <span data-purecounter-start="0" data-purecounter-end="@Convert.ToDecimal(ViewBag.Khoa).ToString("#,##0")" data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Khoa</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                <div class="count-box">
+                    <i class="fas fa-calendar-times"></i>
+                    <span data-purecounter-start="0" data-purecounter-end="@Convert.ToDecimal(ViewBag.CaKham).ToString("#,##0")" data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Ca Khám</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>

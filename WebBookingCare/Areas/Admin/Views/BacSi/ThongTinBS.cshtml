@@ -1,0 +1,136 @@
+﻿@model WebBookingCare.Models.EF.BacSi
+
+@{
+    ViewBag.Title = "ThongTinBS";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">THÔNG TIN BÁC SĨ</h4>
+    <hr />
+</div>
+<div class="d-flex justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="row">
+                <div class="col-8">
+                    <div class="noidung m-5">
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.LabelFor(model => model.HoTen, htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-md-12">
+                                        @Model.HoTen
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-md-12">
+                                        @Model.NgaySinh
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.LabelFor(model => model.GioiTinh, htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-md-12">
+                                        @{
+                                            if (@Model.GioiTinh)
+                                            {
+
+
+                                                <span>Nam</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Nam</span>
+
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-md-12">
+                                        @Model.User.Email
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.LabelFor(model => model.Sdt, htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-md-12">
+                                        @Model.Sdt
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.LabelFor(model => model.Khoa.TenKhoa, htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-md-12">
+                                        @Model.Khoa.TenKhoa
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-4">
+                                    @Html.LabelFor(model => model.ChucVu.TenCV, htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-md-12">
+                                        @Model.ChucVu.TenCV
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="hinh">
+                        <img src="@Model.Avt" />
+                    </div>
+                </div>
+            </div>
+            <div class="chucnang m-5">
+                <div class="form-group font-weight-bold">
+                    <div class="col-md-offset-2 col-md-12 d-flex justify-content-center p-3">
+                        <a href="/admin/bacsi/suabacsi/@Model.MaBS" class="btn btn-success w-100 h-100">Sửa thông tin</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

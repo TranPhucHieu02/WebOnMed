@@ -1,0 +1,105 @@
+﻿@model WebBookingCare.Models.EF.HoSoBenhAn
+
+@{
+    ViewBag.Title = "BenhAn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/vendor/css/core.css" rel="stylesheet" />
+<style>
+    .tenbenhnhan{
+        text-align:center;
+        text-transform: uppercase;
+    }
+    .tenbenhnhan h4 {
+        font-weight:bold;
+    }
+    .tentruong{
+        font-weight:bold;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid black; /* Viền đen với độ dày 1px */
+        padding: 10px; /* Khoảng đệm 5px */
+        white-space: pre-line;
+        width: 33.33%;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f2f2f2; /* Màu nền cho tiêu đề */
+    }
+</style>
+
+<section id="quytrinh" class="quytrinh section-bg">
+    <div class="container">
+        <div class="section-title">
+            <h2>Chi tiết bệnh án</h2>
+        </div>
+        <div class="dl-horizontal">
+            <div class="d-flex justify-content-center">
+                <div class="col-md-10">
+
+                    <div class="card">
+                        
+                        <div class="Thongtinbn m-5">
+                            <div class="tenbenhnhan">
+                                <h4> @Model.PhieuDatLich.TenBN</h4> 
+                            </div>
+                            <!--========================Thông tin bệnh nhân ================================================-->
+                            <div class="row">
+                                <div class="col-md-4 p-3">
+                                    <span class="tentruong">Mã bệnh án</span> @Model.MaPDL
+                                </div>
+                                <div class="col-md-4 p-3">
+                                    <span class="tentruong">Email:</span> @Model.PhieuDatLich.Email
+                                </div>
+                                <div class="col-md-4 p-3">
+                                    <span class="tentruong">Số điện thoại</span> @Model.PhieuDatLich.SDT
+                                </div>
+                                <div class="col-md-4 p-3">
+                                    <span class="tentruong">Ngày khám:</span> @Model.PhieuDatLich.NgayKham.ToString("dd/MM/yyyy")
+                                </div>
+                                <div class="col-md-4 p-3">
+                                    <span class="tentruong">Ca khám</span> @Model.PhieuDatLich.CaKham.TenCa
+                                </div>
+                                <div class="col-md-4 p-3">
+                                    <span class="tentruong">Thời gian</span> @Model.PhieuDatLich.CaKham.ThoiGianBD - @Model.PhieuDatLich.CaKham.ThoiGianKT
+                                </div>
+
+                            </div>
+                            <hr />
+                            <br />
+                            <div class="row">
+                                <table>
+                                    <tr>
+                                        <th>Tên bệnh</th>
+                                        <th>Thuốc điều trị</th>
+                                        <th>Cách điều trị</th>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.TenBenh</td>
+                                        <td>@Model.TenThuoc</td>
+                                        <td>@Model.CachDieuTri</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="note-cell">Lưu ý</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="note-cell">@Model.LuuY</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                            <!--========================Thông tin Khám bệnh ================================================-->
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

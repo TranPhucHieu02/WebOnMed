@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "LichKham";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="doctors" class="doctors section-bg">
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Tra cúu phiếu đặt lịch</h2>
+        </div>
+        <span>Nhập email/sdt</span>
+        <input type="text" class="key" name="key" />
+        <a class="timkiem btn btn-success">Tìm kiếm</a>
+        <hr>
+        <div class="danhsach">
+            @{Html.Action("_TraCuu");}
+
+        </div>
+    </div>
+</section>
+
+
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('.timkiem').click(function () {
+                var key = $('.key').val();
+                $.ajax(
+                    {
+                        url: '/Home/_TraCuu',
+                        type: 'GET',
+                        data: { key: key },
+                        success: function (data) {
+                            $('.danhsach').html(data);
+                        },
+                    });
+            });
+        });
+    </script>
+}

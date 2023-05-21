@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.Khoa>
+
+@{
+    int i = 0, j = 0;
+}
+
+<section id="departments" class="departments section-bg">
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Khoa</h2>
+            <p>Bệnh viện với nhiều khoa chuyên môn đa dạng giúp bệnh nhân có thể được chẩn đoán và điều trị các bệnh lý khác nhau, từ những bệnh lý đơn giản cho đến những bệnh lý phức tạp và nặng.</p>
+        </div>
+
+        <div class="row gy-4">
+            <div class="col-lg-3">
+                <ul class="nav nav-tabs flex-column">
+
+                    @foreach (var item in Model)
+                    {
+                        if (i == 0)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active show" data-bs-toggle="tab" href="#@item.MaKhoa">@item.TenKhoa</a>
+                            </li>
+                            i++;
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#@item.MaKhoa">@item.TenKhoa</a>
+                            </li>
+                        }
+
+
+                    }
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                <div class="tab-content">
+                    @foreach (var item in Model)
+                    {
+                        if (j == 0)
+                        {
+                            <div class="tab-pane active show" id="@item.MaKhoa">
+                                <div class="row gy-4">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>@item.TenKhoa</h3>
+                                        <p>@item.ThongTinKhoa</p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="@item.AnhKhoa" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            j++;
+                        }
+                        else
+                        {
+                            <div class="tab-pane" id="@item.MaKhoa">
+                                <div class="row gy-4">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>@item.TenKhoa</h3>
+                                        <p>@item.ThongTinKhoa</p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="@item.AnhKhoa" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section><!-- End Departments Section -->

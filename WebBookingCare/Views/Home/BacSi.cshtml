@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.BacSi>
+
+<section id="doctors" class="doctors section-bg">
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Bác sĩ</h2>
+            <p>Đội ngũ bác sĩ tại bệnh viện là một đội ngũ được tuyển chọn kỹ càng và có trình độ chuyên môn cao. Họ đều là những chuyên gia trong lĩnh vực y tế, có bằng cấp và chứng chỉ chuyên ngành.</p>
+        </div>
+        <div class="locbs">
+            <div class="row ">
+                <div class="col-md-4 form-group mt-3">
+                    <select name="khoa" id="khoa" class="form-select" required>
+                        <option value="">Lọc theo khoa</option>
+                        @{
+                            for (int i = 0; i < Enumerable.Count(ViewBag.Khoa); i++)
+                            {
+                                <option value="@ViewBag.Khoa[i].MaKhoa">@ViewBag.Khoa[i].TenKhoa</option>
+                            }
+                        }
+                    </select>
+                    <div class="validate"></div>
+                </div>
+                <div class="col-md-4 form-group mt-3">
+                    <select name="chucvu" id="chucvu" class="form-select" required>
+                        <option value="">Tìm theo chức vụ</option>
+                        @{
+                            for (int i = 0; i < Enumerable.Count(ViewBag.ChucVu); i++)
+                            {
+                                <option value="@ViewBag.ChucVu[i].MaCV">@ViewBag.ChucVu[i].TenCV</option>
+                            }
+                        }
+                    </select>
+                    <div class="validate"></div>
+                </div>
+                <div class="col-md-4 form-group mt-3">
+                    <select name="gioitinh" id="gioitinh" class="form-select" required>
+                        <option value="">Tìm theo giới tính</option>
+                        <option value="nam">Nam</option>
+                        <option value="nu">Nữ</option>
+                    </select>
+                    <div class="validate"></div>
+                </div>
+            </div>
+        </div>
+        <div class="dsbacsi">
+            <div class="row">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-6 mt-4">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="@item.Avt" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>@item.HoTen</h4>
+                                <p>@item.Khoa.TenKhoa</p>
+                                <p>@item.ChucVu.TenCV</p>
+                                @{
+                                    if (!item.GioiTinh)
+                                    {
+
+
+                                        <p>Nữ</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Nam</p>
+                                    }
+                                }
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    <script>
+        $(function () {
+            const lsbacsi = document.querySelector(".lsbacsi");
+            $('#khoa').change(function () {
+                // Lấy các giá trị được nhập vào trên form
+                const khoa = document.getElementById("khoa").value;
+                const chucvu = document.getElementById("chucvu").value;
+                const gioitinh = document.getElementById("gioitinh").value;
+                
+                // Gửi yêu cầu đăng ký hẹn khám bệnh đến server
+                $.ajax({
+                    url: "/home/bacsi",
+                    type: "get",
+                    data: { khoa: khoa, chucvu: chucvu, gioitinh: gioitinh },
+                    success: function (data) {
+                            lsbacsi.reset();
+
+                    },
+                });
+            });
+        })
+
+    </script>
+}

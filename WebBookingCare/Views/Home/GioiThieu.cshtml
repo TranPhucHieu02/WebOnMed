@@ -1,0 +1,63 @@
+﻿<!-- ======= Hero Section ======= -->
+@{
+    ViewBag.Title = "LienHe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="hero" class="d-flex align-items-center">
+    <div class="container">
+        <h1>On<span>Med</span></h1>
+        <h2>Chọn OnMed - Chọn một cách sống khỏe và an toàn</h2>
+        <a href="/home/datlich" class="btn-get-started scrollto">Đặt lịch ngay</a>
+
+    </div>
+</section><!-- End Hero -->
+<!-- ======= Why Us Section ======= -->
+<section id="why-us" class="why-us">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-4 d-flex align-items-stretch">
+                <div class="content">
+                    <h3>OnMed?</h3>
+                    <p>
+                        OnMed một nền tảng kết nối giữa bác sĩ và bệnh nhân, giúp bệnh nhân dễ dàng đặt lịch hẹn khám bệnh.
+                    </p>
+                    <p>
+                        OnMed giúp người dùng tiết kiệm thời gian và tiền bạc khi đặt lịch khám bệnh, đồng thời cung cấp cho họ sự thuận tiện và linh hoạt trong việc quản lý sức khỏe của mình.
+
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-8 d-flex align-items-stretch">
+                <div class="icon-boxes d-flex flex-column justify-content-center">
+                    <div class="row">
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box mt-4 mt-xl-0">
+                                <i class="ri-service-fill"></i>
+                                <h4>Chất lượng dịch vụ</h4>
+                                <p>OnMed cam kết mang đến cho khách hàng dịch vụ chăm sóc sức khỏe chất lượng cao nhất.</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box mt-4 mt-xl-0">
+                                <i class="fa fa-user-doctor"></i>
+                                <h4>Đội ngũ Bác sĩ</h4>
+                                <p>Đội ngũ bác sĩ OnMed được tuyển chọn kỹ càng, đáp ứng các tiêu chuẩn chuyên môn cao và có kinh nghiệm thực tiễn lâu năm trong ngành.</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box mt-4 mt-xl-0">
+                                <i class="bx bx-money"></i>
+                                <h4>Giá dịch vụ</h4>
+                                <p>Giá cả phải chăng cho dịch vụ chăm sóc sức khỏe chất lượng cao giúp mọi người có thể tiếp cận với các dịch vụ y tế tốt nhất mà không cần lo lắng về chi phí.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End .content-->
+
+    </div>
+</section><!-- End Why Us Section -->
+@{Html.RenderAction("_ThongKe");}

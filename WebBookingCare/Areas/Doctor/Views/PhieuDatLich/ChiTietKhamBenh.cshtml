@@ -1,0 +1,94 @@
+﻿@model WebBookingCare.Models.ViewModels.BenhAnViewModel
+
+@{
+    ViewBag.Title = "ChiTietKhamBenh";
+    Layout = "~/Areas/Doctor/Views/Shared/_LayoutDoctor.cshtml";
+}
+
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">CHI TIẾT KHÁM BỆNH</h4>
+    <hr />
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.HoSoBenhAn.MaHS)
+        @Html.HiddenFor(model => model.PhieuDatLich.MaPDL)
+        @Html.HiddenFor(model => model.PhieuDatLich.TenBN)
+        @Html.HiddenFor(model => model.PhieuDatLich.Email)
+        @Html.HiddenFor(model => model.PhieuDatLich.SDT)
+        @Html.HiddenFor(model => model.PhieuDatLich.TinhTrang)
+
+        <!--========================Thông tin bệnh nhân================================================-->
+        <div class="d-flex justify-content-center">
+            <div class="col-md-10">
+
+                <div class="card">
+                    <div class="Thongtinbn m-5">
+                        <div class="row">
+                            <div class="col-4 p-3">
+                                <span class="font-weight-bold">Tên bệnh nhân:</span> @Model.PhieuDatLich.TenBN
+                            </div>
+                            <div class="col-4 p-3">
+                                <span class="font-weight-bold">Email:</span> @Model.PhieuDatLich.Email
+                            </div>
+                            <div class="col-4 p-3">
+                                <span class="font-weight-bold">Số điện thoại</span> @Model.PhieuDatLich.SDT
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 p-3">
+                                <span class="font-weight-bold">Tình trạng</span> @Model.PhieuDatLich.TinhTrang
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="thongtinkhambenh m-5">
+                            <!--========================Thông tin Khám bệnh================================================-->
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoSoBenhAn.TenBenh, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.HoSoBenhAn.TenBenh, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HoSoBenhAn.TenBenh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoSoBenhAn.TenThuoc, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.HoSoBenhAn.TenThuoc, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HoSoBenhAn.TenThuoc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoSoBenhAn.CachDieuTri, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.HoSoBenhAn.CachDieuTri, new { htmlAttributes = new { @class = "form-control " } })
+                                @Html.ValidationMessageFor(model => model.HoSoBenhAn.CachDieuTri, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoSoBenhAn.LuuY, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.HoSoBenhAn.LuuY, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HoSoBenhAn.LuuY, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <div class="col-md-offset-2 col-md-12">
+                                <input type="submit" value="Lưu" class="btn btn-success w-100 h-100" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

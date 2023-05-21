@@ -1,0 +1,101 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.PhieuDatLich>
+
+@{
+    ViewBag.Title = "LichKham";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+
+<section class="lichkham section-bg">
+    <h2>LichKham</h2>
+
+    <table class="table table-bordered display" id="tablePDL">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayDat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayKham)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CaKham.TenCa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BacSi.HoTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BacSi.Khoa.TenKhoa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrangThai)
+                </th>
+                <th>
+                    Chi tiết
+                </th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayDat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayKham)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CaKham.TenCa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BacSi.HoTen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BacSi.Khoa.TenKhoa)
+                    </td>
+                    <td>
+                        @{
+                            if (item.TrangThai == 0)
+                            {   
+                                <a>Chưa duyệt</a>
+                            }
+                            else if (item.TrangThai == 1)
+                            {
+                                <a>Đã duyệt</a>
+                            }
+                            else if (item.TrangThai == 2)
+                            {
+                                <a>Đã khám</a>
+                            }
+                            else if (item.TrangThai == 3)
+                            {
+                                <a>Đã hủy</a>
+                            }
+                        }
+                    </td>
+                    <td>
+                        <a class="btn" href="/home/hosokhambenh/?MaPDL=@item.MaPDL">Chi tiết</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</section>
+@section scripts{
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablePDL').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,78 @@
+﻿@model WebBookingCare.Models.EF.CaKham
+
+@{
+    ViewBag.Title = "ChiTiet";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">THÔNG TIN CA KHÁM</h4>
+    <hr />
+</div>
+<div>
+    <div class="d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="noidung m-5">
+                    <div class="form-group font-weight-bold">
+                        <div class="row">
+                            <div class="col-3">
+                                @Html.LabelFor(model => model.TenCa, htmlAttributes: new { @class = "control-label col-md-12" })
+                            </div>
+                            <div class="col-9">
+                                <div class="col-md-12">
+                                    @Model.TenCa
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group font-weight-bold">
+                        <div class="row">
+                            <div class="col-3">
+                                @Html.LabelFor(model => model.ThoiGianBD, htmlAttributes: new { @class = "control-label col-md-12" })
+                            </div>
+                            <div class="col-9">
+                                <div class="col-md-12">
+                                    @Model.ThoiGianBD
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group font-weight-bold">
+                        <div class="row">
+                            <div class="col-3">
+                                @Html.LabelFor(model => model.ThoiGianKT, htmlAttributes: new { @class = "control-label col-md-12" })
+                            </div>
+                            <div class="col-9">
+                                <div class="col-md-12">
+                                    @Model.ThoiGianKT
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group font-weight-bold">
+                        <div class="row">
+                            <div class="col-3">
+                                @Html.LabelFor(model => model.SoLuongKham, htmlAttributes: new { @class = "control-label col-md-12" })
+                            </div>
+                            <div class="col-9">
+                                <div class="col-md-12">
+                                    @Model.SoLuongKham
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group font-weight-bold">
+                        <div class="col-md-offset-2 col-md-12 d-flex justify-content-center p-3">
+                            <a href="/admin/cakham/suacakham/@Model.MaCa" class="btn btn-success w-100 h-100">Sửa thông tin</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

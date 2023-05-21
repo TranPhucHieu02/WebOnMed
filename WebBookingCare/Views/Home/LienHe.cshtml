@@ -1,0 +1,47 @@
+﻿@model WebBookingCare.Models.EF.LienHe
+
+@{
+    ViewBag.Title = "LienHe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/css/style.css" rel="stylesheet" />
+
+<section class="lienhe section-bg">
+    <div class="container">
+        <div class="section-title">
+            <h2>Liên hệ</h2>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row  d-flex justify-content-center">
+                <div class="col-6">
+                    <div class="form-group mt-3">
+                        <input type="text" class="form-control" name="hoten" placeholder="Nhập họ và tên của bạn">
+                    </div>
+                    <div class="form-group  mt-3">
+                        <input type="email" class="form-control" name="email" placeholder="Nhập địa chỉ email của bạn">
+                    </div>
+                    <div class="form-group  mt-3">
+                        <input type="tel" class="form-control" name="sdt" placeholder="Nhập số điện thoại của bạn">
+                    </div>
+                    <div class="form-group  mt-3">
+                        <input type="text" class="form-control" name="chude" placeholder="Nhập chủ đề của bạn">
+                    </div>
+                    <div class="form-group  mt-3">
+                        <textarea class="form-control" name="noidung" rows="5" placeholder="Nhập nội dung của bạn"></textarea>
+                    </div>
+                    <div class="form-group  mt-3">
+                        <div class="">
+                            <input type="submit" value="Gửi" class="btn btn-success w-100 h-100" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+
+</section>

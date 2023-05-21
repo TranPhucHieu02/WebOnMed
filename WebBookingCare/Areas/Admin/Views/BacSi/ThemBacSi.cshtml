@@ -1,0 +1,211 @@
+﻿@model WebBookingCare.Models.ViewModels.BacSiViewmodel
+
+@{
+    ViewBag.Title = "ThemBacSi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">THÊM BÁC SĨ</h4>
+    <hr />
+</div>
+<div class="d-flex justify-content-center">
+    <div class="col-md-10">
+
+        <div class="card">
+            <div class="noidung m-5">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal ">
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.HoTen, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                </div>
+                                <div class="col-10">
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                </div>
+                                <div class="col-10">
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.GioiTinh, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                </div>
+                                <div class="col-10">
+                                    <div class="col-md-12">
+                                        <select class="form-control" id="GioiTinh" name="GioiTinh">
+                                            <option selected="selected" value="true">Nam</option>
+                                            <option value="false">Nữ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                </div>
+                                <div class="col-10">
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.SDT, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                </div>
+                                <div class="col-10">
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.Avt, "Hình", htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-10">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.Avt, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                @Html.ValidationMessageFor(model => model.Avt, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="file" name="fileUpload" id="fileUpload" accept="image/*" style="display:none;" />
+                                            <input type="button" id="btnUpload" value="Chọn" class="btn btn-success" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.MaKhoa, "Khoa", htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                </div>
+                                <div class="col-10">
+                                    <div class="col-md-12">
+                                        @Html.DropDownList("MaKhoa", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.MaKhoa, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group font-weight-bold">
+                            <div class="row">
+                                <div class="col-2">
+                                    @Html.LabelFor(model => model.MaCV, "Công Viêc", htmlAttributes: new { @class = "control-label col-md-12" })
+                                </div>
+                                <div class="col-10">
+                                    <div class="col-md-12">
+                                        @Html.DropDownList("MaCV", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.MaCV, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="form-group ">
+                            <div class="col-md-offset-2 col-md-12">
+                                <input type="submit" value="Thêm mới" class="btn btn-success w-100 h-100" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('#btnUpload').click(function () {
+                $('#fileUpload').trigger('click');
+            });
+        });
+
+        $('#fileUpload').change(function () {
+            if (window.FormData !== undefined) {
+                var fileUpload = $('#fileUpload').get(0);
+                var files = fileUpload.files;
+                var formData = new FormData();
+                formData.append('file', files[0]);
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Admin/BacSis/ProcessUpload',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src', urlImage);
+                            $('#Avt').val(urlImage);
+                        },
+
+                        error: function (err) {
+
+                            alert('Error ', err.statusText);
+                        }
+                    });
+            }
+        });
+
+    </script>
+}
+

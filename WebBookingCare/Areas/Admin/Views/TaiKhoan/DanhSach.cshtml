@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "DanhSach";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+
+@{
+    var user = ViewBag.User;
+
+}
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">QUẢN LÝ TÀI KHOẢN</h4>
+    <hr />
+</div>
+<div class="dsbs m-3">
+    <table class="table table-bordered display" id="tableTaiKhoan">
+        <thead>
+            <tr>
+                <th>Họ Tên</th>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Tùy chọn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in user)
+            {
+                <tr>
+                    <td>@item.BacSi.HoTen</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                    <td>
+                        @if (item.DeleteUser == false)
+                        {
+                            <button type="button" class="btn btn-outline-success btn-sm toggle-account-status"
+                                    data-userid="@item.UserName" data-status="unlocked">
+                                <i class="fas fa-unlock"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-outline-danger btn-sm toggle-account-status"
+                                    data-userid="@item.UserName" data-status="locked">
+                                <i class="fas fa-lock"></i>
+                            </button>
+                        }
+                        <button type="button" class="btn btn-outline-primary btn-sm edit-account"
+                                data-userid="@item.Id">
+                            <i class="fas fa-edit"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+    @section scripts {
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+        <script>
+        $(document).ready(function () {
+            $('#tableTaiKhoan').DataTable({
+                "drawCallback": function (settings) {
+                    $('.toggle-account-status').click(function () {
+                        var btn = $(this);
+                        var userId = btn.data('userid');
+                        var status = btn.data('status');
+                        var url = '/admin/taikhoan/trangthai';
+                        var data = { userId: userId, status: status };
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            data: data,
+                            success: function (result) {
+                                if (result.success) {
+                                    if (status === 'unlocked') {
+                                        btn.removeClass('btn-outline-success').addClass('btn-outline-danger');
+                                        btn.find('i').removeClass('fas fa-unlock').addClass('fas fa-lock');
+                                        btn.find('span').text('Khóa');
+                                        btn.data('status', 'locked');
+                                    } else {
+                                        btn.removeClass('btn-outline-danger').addClass('btn-outline-success');
+                                        btn.find('i').removeClass('fas fa-lock').addClass('fas fa-unlock');
+                                        btn.find('span').text('Kích Hoạt');
+                                        btn.data('status', 'unlocked');
+                                    }
+                                } else {
+                                    alert(result.message);
+                                }
+                            },
+                            error: function () {
+                                alert('Đã xảy ra lỗi khi cập nhật trạng thái tài khoản.');
+                            }
+                        });
+                    });
+
+                    $('.edit-account').click(function () {
+                        var userId = $(this).data('userid');
+                        // Chuyển hướng đến trang chỉnh sửa tài khoản với tham số là userId
+                        window.location.href =" @Url.Action("SuaBacSi", "BacSi")"+"/" +userId;
+                    });
+
+                }
+            });
+        });
+        </script>
+    }

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.PhieuDatLich>
+
+
+<section class="lichkham section-bg">
+
+    <table class="table table-bordered display" id="tablePDL">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaPDL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayDat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayKham)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CaKham.TenCa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BacSi.HoTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BacSi.Khoa.TenKhoa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrangThai)
+                </th>
+                <th>
+                    Chi tiết
+                </th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaPDL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayDat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayKham)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CaKham.TenCa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BacSi.HoTen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BacSi.Khoa.TenKhoa)
+                    </td>
+                    <td>
+                        @{
+                            if (item.TrangThai == 0)
+                            {
+                                <span class="font-weight-bold">Chưa duyệt</span>
+                            }
+                            else if (item.TrangThai == 1)
+                            {
+                                <span class="font-weight-bold">Đã duyệt</span>
+                            }
+                            else if (item.TrangThai == 2)
+                            {
+                                <span class="font-weight-bold">Đã khám</span>
+                            }
+                            else if (item.TrangThai == 3)
+                            {
+                                <span class="font-weight-bold">Đã hủy</span>
+                            }
+
+
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (item.TrangThai == 2)
+                            {
+                                <a class="btn btn-success" href="/home/benhan/@item.MaPDL">Chi tiết</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</section>
