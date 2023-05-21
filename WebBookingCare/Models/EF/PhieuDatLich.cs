@@ -24,26 +24,35 @@ namespace WebBookingCare.Models.EF
         public string MaBN { get; set; }
 
         [Display(Name = "Tên bệnh nhân")]
+        [Required]
         public string TenBN { get; set; }
+        [Display(Name = "Tuổi")]
+        [Required]
+        public int Tuoi { get; set; }
 
         [Display(Name = "Email bệnh nhân")]
+        [Required]
         public string Email { get; set; }
 
         [Display(Name = "SDT bệnh nhân")]
+        [Required]
         public string SDT { get; set; }
 
         [StringLength(500)]
         [Display(Name = "Tình trạng")]
+        [Required]
         public string TinhTrang { get; set; }
 
         [StringLength(10)]
         [Display(Name = "Mã bác sĩ")]
+        [Required]
         public string MaBS { get; set; }
 
         [Column(TypeName = "date")]
         [Display(Name = "Ngày đặt")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [Required]
         public DateTime? NgayDat { get; set; }
 
         [Column(TypeName = "date")]
@@ -54,9 +63,11 @@ namespace WebBookingCare.Models.EF
         public DateTime NgayKham { get; set; }
 
         [StringLength(50)]
+        [Required]
         public string MaCa { get; set; }
 
         [Display(Name = "Trạng thái")]
+        [Required]
         public int TrangThai { get; set; }
 
         public virtual BenhNhan BenhNhan { get; set; }

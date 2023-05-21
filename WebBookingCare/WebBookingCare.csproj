@@ -238,6 +238,10 @@
     <Compile Include="Migrations\202305210739146_updb1.designer.cs">
       <DependentUpon>202305210739146_updb1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305211708187_updatebd20.cs" />
+    <Compile Include="Migrations\202305211708187_updatebd20.designer.cs">
+      <DependentUpon>202305211708187_updatebd20.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EF\Admin.cs" />
     <Compile Include="Models\EF\BacSi.cs" />
@@ -2555,6 +2559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305210739146_updb1.resx">
       <DependentUpon>202305210739146_updb1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305211708187_updatebd20.resx">
+      <DependentUpon>202305211708187_updatebd20.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

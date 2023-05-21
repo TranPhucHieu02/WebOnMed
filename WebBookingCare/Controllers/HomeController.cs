@@ -23,7 +23,6 @@ namespace WebBookingCare.Controllers
         public ActionResult DatLich()
         {
             ViewBag.Khoa = db.Khoa.ToList();
-            ViewBag.CaKham = db.caKham.ToList();
             return View("DatLich");
         }
         [HttpPost]
@@ -41,6 +40,7 @@ namespace WebBookingCare.Controllers
                 phieuDatLich.TrangThai = 0;
                 phieuDatLich.MaCa = pdl.MaCa;
                 phieuDatLich.TenBN = pdl.TenBN;
+                phieuDatLich.Tuoi = pdl.Tuoi;
                 phieuDatLich.Email = pdl.Email;
                 phieuDatLich.SDT = pdl.SDT;
                 phieuDatLich.TinhTrang = pdl.TinhTrang;
@@ -118,13 +118,31 @@ namespace WebBookingCare.Controllers
             });
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetDichVu(string MaKhoa)
+        public JsonResult GetCaKham(string mabs,DateTime ngaykham)
         {
-            var lsdv = db.DichVu.Where(p => p.MaKhoa == MaKhoa).ToList();
-            var result = lsdv.Select(x => new {
-                x.MaDV,
-                x.TenDV,
+            var listCaKham = db.caKham.ToList();
+            var listCaKhamOll = db.caKham.ToList();
+            var donNghiPhep = db.DonNghiPhep.SingleOrDefault(p => p.TrangThai == true && p.MaBS == mabs && p.NgayNghi == ngaykham);
+            if(donNghiPhep != null)
+            {
+                var lsCaNghi = db.CaNghi.Where(p => p.DonNghiPhepId == donNghiPhep.Id).ToList();
+                foreach (var caNghi in lsCaNghi)
+                {
+                    foreach (var caKham in listCaKhamOll)
+                    {
+                        if (caNghi.MaCa == caKham.MaCa)
+                        {
+                            listCaKham.Remove(caKham);
+                        }
+                    }
+                }
+               
+            }
+            var result = listCaKham.Select(x => new {
+                x.MaCa,
+                x.TenCa,
             });
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Khoa()

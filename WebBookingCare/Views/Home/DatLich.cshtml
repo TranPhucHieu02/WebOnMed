@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<WebBookingCare.Models.EF.PhieuDatLich>
 @{
     ViewBag.Title = "DatLich";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,10 +7,6 @@
 <!-- ======= Appointment Section ======= -->
 <section id="appointmen" class="appointment section-bg">
     <div class="container">
-
-        @*<div class="section-title">
-            <h2>Đặt Lịch</h2>
-        </div>*@
         <div class="row">
             <div class="col col-md-sm-6">
                 <div class="formdatlich">
@@ -18,9 +14,10 @@
                         <h2>Đặt Lịch</h2>
                     </div>
                     <form name="datlich" id=datlich class="php-email-form">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="row">
                             <div class="col-md-6 form-group mt-3">
-                                <input type="text" name="hoten" class="form-control" id="name" placeholder="Tên của bạn" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+                                <input type="text" class="form-control" name="hoten" id="name" placeholder="Tên của bạn" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
                                 <div class="validate"></div>
                             </div>
                             <div class="col-md-6 form-group mt-3">
@@ -36,30 +33,7 @@
                                 <div class="validate"></div>
                             </div>
 
-                            <div class="col-md-6 form-group mt-3">
-                                <select name="ngaykham" id="ngaykham" class="form-select" required>
-                                    <option value="">Chọn ngày khám</option>
-                                    @{
-                                        for (int i = 0; i < 7; i++)
-                                        {
-                                            <option value="@DateTime.Today.AddDays(i + 3).ToString("MM/dd/yyyy")">@DateTime.Today.AddDays(i + 3).ToString("dddd", new System.Globalization.CultureInfo("vi-VN")) - @DateTime.Today.AddDays(i + 3).ToString("dd/MM/yyyy")</option>
-                                        }
-                                    }
-                                </select>
-                                <div class="validate"></div>
-                            </div>
-                            <div class="col-md-6 form-group mt-3">
-                                <select name="cakham" id="cakham" class="form-select" required>
-                                    <option value="">Chọn Ca Khám</option>
-                                    @{
-                                        for (int i = 0; i < Enumerable.Count(ViewBag.CaKham); i++)
-                                        {
-                                            <option value="@ViewBag.CaKham[i].MaCa">@ViewBag.CaKham[i].TenCa:  @ViewBag.CaKham[i].ThoiGianBD-@ViewBag.CaKham[i].ThoiGianKT</option>
-                                        }
-                                    }
-                                </select>
-                                <div class="validate"></div>
-                            </div>
+
                             <div class="col-md-6 form-group mt-3">
                                 <select name="khoa" id="khoa" class="form-select" required>
                                     <option value="">Chọn chuyên khoa</option>
@@ -72,17 +46,28 @@
                                 </select>
                                 <div class="validate"></div>
                             </div>
-                            <!--<div class="col-md-6 form-group mt-3">
-        <select name="dichvu" id="dichvu" class="form-select" disabled required>
-            <option value="">Chọn dịch vụ</option>
-
-        </select>
-        <div class="validate"></div>
-    </div>-->
                             <div class="col-md-6 form-group mt-3">
                                 <select name="bacsi" id="bacsi" class="form-select" disabled required>
                                     <option value="">Chọn bác sĩ</option>
 
+                                </select>
+                                <div class="validate"></div>
+                            </div>
+                            <div class="col-md-6 form-group mt-3">
+                                <select name="ngaykham" id="ngaykham" class="form-select" disabled required>
+                                    <option value="">Chọn ngày khám</option>
+                                    @{
+                                        for (int i = 0; i < 7; i++)
+                                        {
+                                            <option value="@DateTime.Today.AddDays(i + 3).ToString("MM/dd/yyyy")">@DateTime.Today.AddDays(i + 3).ToString("dddd", new System.Globalization.CultureInfo("vi-VN")) - @DateTime.Today.AddDays(i + 3).ToString("dd/MM/yyyy")</option>
+                                        }
+                                    }
+                                </select>
+                                <div class="validate"></div>
+                            </div>
+                            <div class="col-md-6 form-group mt-3">
+                                <select name="cakham" id="cakham" class="form-select" disabled required>
+                                    <option value="">Chọn Ca Khám</option>
                                 </select>
                                 <div class="validate"></div>
                             </div>
@@ -135,6 +120,8 @@
                 var data = $(this).val();
                 if (data) {
                     $("#bacsi").prop("disabled", false);
+                    $("#ngaykham,#cakham").prop("disabled", true);
+                    $("#ngaykham,#cakham").val("");
                     $.ajax({
                         url: '/Home/GetBacSi',
                         type: 'get',
@@ -152,39 +139,50 @@
                         }
                     });
                 } else {
-                    $("#bacsi").prop("disabled", true);
-                    $("#bacsi").html("<option value=''>Chọn bác sĩ</option>");
+                    $("#bacsi, #ngaykham, #cakham").prop("disabled", true);
+                    $("#bacsi,#ngaykham ,#cakham").val("");
+                }
+            });
+            $('#bacsi').change(function () {
+                var data = $(this).val();
+                if (data) {
+                    $("#ngaykham").prop("disabled", false);
+                    $("#ngaykham,#cakham").val("");
+                    $("#cakham").prop("disabled", true);
+                } else {
+                    $("#ngaykham ,#cakham").val("");
+                    $("#ngaykham,#cakham").prop("disabled", true);
+
+                }
+            });
+            $('#ngaykham').change(function () {
+                var ngaykham = $(this).val();
+                var mabs = $('#bacsi').val();
+                if (ngaykham) {
+                    $("#cakham").prop("disabled", false);
+                    $.ajax({
+                        url: '/Home/GetCaKham',
+                        type: 'get',
+                        dataType: 'json',
+                        data: { mabs: mabs, ngaykham: ngaykham },
+                        success: function (result) {
+                            var options = "<option value=''>Chọn ca khám</option>";
+                            $.each(result, function (index, cakham) {
+                                options += "<option value='" + cakham.MaCa + "'>" + cakham.TenCa + "</option>";
+                            });
+                            $('#cakham').html(options);
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            alert("Error: " + textStatus + " - " + errorThrown);
+                        }
+                    });
+                } else {
+                    $("#cakham").val("");
+                    $("#cakham").prop("disabled", true);
                 }
             });
         });
 
-        //$(function () {
-        //    $('#dichvu').change(function () {
-        //        var data = $(this).val();
-        //        if (data) {
-        //            $("#bacsi").prop("disabled", false);
-        //            $.ajax({
-        //                url: '/Home/GetBacSi',
-        //                type: 'get',
-        //                dataType: 'json',
-        //                data: { MaDV: data },
-        //                success: function (result) {
-        //                    var options = "<option value=''>Chọn bác sĩ</option>";
-        //                    $.each(result, function (index, bacsi) {
-        //                        options += "<option value='" + bacsi.MaCV + "'>" + bacsi.HoTen + "</option>";
-        //                    });
-        //                    $('#bacsi').html(options);
-        //                },
-        //                error: function (xhr, textStatus, errorThrown) {
-        //                    alert("Error: " + textStatus + " - " + errorThrown);
-        //                }
-        //            });
-        //        } else {
-        //            $("#bacsi").prop("disabled", true);
-        //            $("#bacsi").html("<option value=''>Chọn bác sĩ</option>");
-        //        }
-        //    });
-        //});
 
         $(function () {
 
@@ -195,59 +193,68 @@
 
             // Xử lý sự kiện khi form đăng ký hẹn khám bệnh được gửi đi
             /*appointmentForm.addEventListener("submit", (e) => {*/
-            $('#luu').click(function () {
+            $('#luu').click(function (event) {
 
-              
+                event.preventDefault();
 
                 // Lấy các giá trị được nhập vào trên form
                 const hoten = document.getElementById("name").value;
+                const tuoi = document.getElementById("tuoi").value;
                 const email = document.getElementById("email").value;
                 const sdt = document.getElementById("phone").value;
                 const ngaykham = document.getElementById("ngaykham").value;
                 const cakham = document.getElementById("cakham").value;
                 const bacsi = document.getElementById("bacsi").value;
                 const tinhtrang = document.getElementById("tinhtrang").value;
-                const pdl = {
-                    TenBN: hoten,
-                    Email: email,
-                    SDT: sdt,
-                    NgayKham: ngaykham,
-                    MaCa: cakham,
-                    MaBS: bacsi,
-                    TinhTrang: tinhtrang
-                };
-                // Gửi yêu cầu đăng ký hẹn khám bệnh đến server
-                $.ajax({
-                    url: "/home/DatLich",
-                    type: "POST",
-                    data: JSON.stringify(pdl),
-                    contentType: "application/json",
-                    success: function (data) {
-                        if (data.code === 200) {
-                            // Hiển thị thông báo "Đăng ký thành công"
-                            alert(data.msg);
-                            datlich.reset();
+                if (hoten !== "" && tuoi !== "" && email !== "" && sdt !== "" && ngaykham !== "" && cakham !== "" && bacsi !== "" && tinhtrang !== "") {
+                    const pdl = {
+                        TenBN: hoten,
+                        Tuoi: tuoi,
+                        Email: email,
+                        SDT: sdt,
+                        NgayKham: ngaykham,
+                        MaCa: cakham,
+                        MaBS: bacsi,
+                        TinhTrang: tinhtrang
+                    };
+                    // Gửi yêu cầu đăng ký hẹn khám bệnh đến server
+                    $.ajax({
+                        url: "/home/DatLich",
+                        type: "post",
+                        data: JSON.stringify(pdl),
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.code === 200) {
+                                // Hiển thị thông báo "Đăng ký thành công"
+                                alert(data.msg);
+                                // Xóa các giá trị đã nhập trên form
+                                datlich.reset();
+                                // Ẩn các trường Bác sĩ, Ngày khám và Ca khám
+                                $("#bacsi, #ngaykham, #cakham").prop("disabled", true)
 
-                            // Xóa các giá trị đã nhập trên form
+                            } else {
+                                // Hiển thị thông báo lỗi
+                                alert(data.msg);
 
-                        } else {
+                            }
+                        },
+
+                        error: function (xhr, status, error) {
+                            // Ẩn thông báo "Đang gửi..."
+                            loadingElement.style.display = "none";
+                            errorMessage.style.display = "none";
+
                             // Hiển thị thông báo lỗi
-                            alert(data.msg);
+                            errorMessage.innerText = "Đã có lỗi xảy ra. Vui lòng thử lại sau.";
+                            errorMessage.style.display = "none";
+                        },
+                    });
 
-                        }
-                    },
-
-                    error: function (xhr, status, error) {
-                        // Ẩn thông báo "Đang gửi..."
-                        loadingElement.style.display = "none";
-                        errorMessage.style.display = "none";
-
-                        // Hiển thị thông báo lỗi
-                        errorMessage.innerText = "Đã có lỗi xảy ra. Vui lòng thử lại sau.";
-                        errorMessage.style.display = "none";
-                    },
-                });
-
+                } else {
+                    // Hiển thị thông báo lỗi hoặc xử lý các trường hợp khác
+                    // ...
+                    alert("vui lòng nhập đủ thông tin")
+                }
 
             });
         })
