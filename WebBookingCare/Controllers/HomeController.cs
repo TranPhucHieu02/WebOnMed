@@ -123,7 +123,16 @@ namespace WebBookingCare.Controllers
             var listCaKham = db.caKham.ToList();
             var listCaKhamOll = db.caKham.ToList();
             var donNghiPhep = db.DonNghiPhep.SingleOrDefault(p => p.TrangThai == true && p.MaBS == mabs && p.NgayNghi == ngaykham);
-            if(donNghiPhep != null)
+            var phieuDatLich = db.PhieuDatLich.Where(p => p.NgayKham == ngaykham && p.MaBS==mabs).ToList();
+            for(int i = 0;i< listCaKhamOll.Count(); i++)
+            {
+                var count = phieuDatLich.Where(p => p.MaCa == listCaKhamOll[i].MaCa).Count();
+                if (count >= 5)
+                {
+                    listCaKham.Remove(listCaKhamOll[i]);
+                }
+            }
+            if (donNghiPhep != null)
             {
                 var lsCaNghi = db.CaNghi.Where(p => p.DonNghiPhepId == donNghiPhep.Id).ToList();
                 foreach (var caNghi in lsCaNghi)
@@ -141,6 +150,8 @@ namespace WebBookingCare.Controllers
             var result = listCaKham.Select(x => new {
                 x.MaCa,
                 x.TenCa,
+                x.ThoiGianBD,
+                x.ThoiGianKT,
             });
 
             return Json(result, JsonRequestBehavior.AllowGet);

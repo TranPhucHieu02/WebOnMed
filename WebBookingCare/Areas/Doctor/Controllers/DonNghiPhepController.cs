@@ -37,10 +37,24 @@ namespace WebBookingCare.Areas.Doctor.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult DangKyNghiPhep(DonNghiPhep donNghiPhep)
+        public ActionResult DangKyNghiPhep(DonNghiPhep donNghiPhep,List<String> cakham)
         {
-            
-            return RedirectToAction("");
+            var nghiPhep = new DonNghiPhep();
+            nghiPhep.NgayNghi = donNghiPhep.NgayNghi;
+            nghiPhep.TrangThai = false;
+            nghiPhep.MaBS = donNghiPhep.MaBS;
+            db.DonNghiPhep.Add(nghiPhep);
+            foreach(var ca in cakham )
+            {
+                var caNghi = new CaNghi();
+
+                caNghi.DonNghiPhepId = nghiPhep.Id ;
+                caNghi.MaCa = ca;
+                db.CaNghi.Add(caNghi);
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("danhsach", "phieudatlich");
         }
     }
 }

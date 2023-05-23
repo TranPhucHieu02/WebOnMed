@@ -19,13 +19,15 @@ namespace WebBookingCare.Areas.Doctor.Controllers
         public ActionResult DanhSach()
         {
             string id = User.Identity.GetUserId();
-            var ls = db.PhieuDatLich.Where(p=>p.MaBS==id && p.TrangThai==1).OrderBy(p => p.NgayKham).ToList();
+            var nowdate = DateTime.Now;
+            var ls = db.PhieuDatLich.Where(p=>p.MaBS==id && p.TrangThai==1 && p.NgayKham == nowdate.Date).OrderBy(p => p.MaCa).ToList();
             return View(ls);
         }
         public ActionResult DuyetLich()
         {
+            var nowdate = DateTime.Now.Date;
             string id = User.Identity.GetUserId();
-            var ls = db.PhieuDatLich.Where(p => p.MaBS == id && p.TrangThai == 0).OrderBy(p => p.NgayKham).ToList();
+            var ls = db.PhieuDatLich.Where(p => p.MaBS == id && p.TrangThai == 0 &&p.NgayKham >= nowdate ).OrderBy(p => p.NgayKham).ToList();
             return View(ls);
         }
         [HttpPost]

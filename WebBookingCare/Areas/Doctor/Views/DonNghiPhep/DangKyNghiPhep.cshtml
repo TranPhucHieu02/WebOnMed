@@ -13,9 +13,9 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input class="form-label" value="@ViewBag.BacSi.MaBS" name="mabs" hidden />
         <div class="d-flex justify-content-center">
             <div class="col-md-10">
 
@@ -30,37 +30,31 @@
                                 <span class="font-weight-bold">Email:</span> @ViewBag.BacSi.User.Email
                             </div>
                             <div class="col-4 p-3">
-                                <span class="font-weight-bold">SDT</span> @ViewBag.BacSi.Sdt
+                                <span class="font-weight-bold">SDT:</span> @ViewBag.BacSi.Sdt
                             </div>
                         </div>
                         <hr />
-
                         <div class="form-group">
                             @Html.LabelFor(model => model.NgayNghi, htmlAttributes: new { @class = "font-weight-bold control-label col-md-2" })
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 @{
                                     DateTime today = DateTime.Now.Date;
                                     DateTime endDate = today.AddDays(15);
                                     List<SelectListItem> nghiOptions = new List<SelectListItem>();
-
-                                   // Danh sách các ngày đã đăng ký nghỉ
+                                    // Danh sách các ngày đã đăng ký nghỉ
                                     List<DateTime> daDangKyNghi = ViewBag.DaDangKyNghi; // Chỉnh sửa tên danh sách tương ứng trong mô hình
-
                                     for (DateTime date = today; date <= endDate; date = date.AddDays(1))
                                     {
                                         // Kiểm tra xem ngày đã được đăng ký nghỉ hay chưa
                                         bool isDaDangKyNghi = daDangKyNghi.Contains(date);
-
                                         if (!isDaDangKyNghi)
                                         {
                                             nghiOptions.Add(new SelectListItem { Text = date.ToString("MM/dd/yyyy"), Value = date.ToString("yyyy-MM-dd") });
                                         }
                                     }
                                 }
-
                                 @Html.DropDownListFor(model => model.NgayNghi, nghiOptions, "Chọn ngày nghỉ", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.NgayNghi, "", new { @class = "text-danger" })
-
                             </div>
                         </div>
                         <div class="form-group">
@@ -69,17 +63,17 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label>
-                                            <input type="checkbox" id="selectAllCa" /> Cả ngày
+                                            <input type="checkbox" id="cangay" /> Cả ngày
                                         </label>
                                     </div>
                                     <div class="col-md-4">
                                         <label>
-                                            <input type="checkbox" id="selectAllCa" /> Buổi sáng
+                                            <input type="checkbox" id="buoisang" /> Buổi sáng
                                         </label>
                                     </div>
                                     <div class="col-md-4">
                                         <label>
-                                            <input type="checkbox" id="selectAllCa" /> Buổi chiều
+                                            <input type="checkbox" id="buoichieu" /> Buổi chiều
                                         </label>
                                     </div>
                                 </div>
@@ -95,7 +89,7 @@
                                             @{
                                                 bool isChecked = false;
                                             }
-                                            @Html.CheckBoxFor(model => isChecked, new { value = caKham, name = "cakham" }) @caKham.TenCa : @caKham.ThoiGianBD - @caKham.ThoiGianKT
+                                            <input type="checkbox" value="@caKham.MaCa" name="cakham"/> @caKham.TenCa : @caKham.ThoiGianBD - @caKham.ThoiGianKT
                                         </label>
                                     </div>
                                 }
@@ -113,26 +107,102 @@
         </div>
     </div>
 }
-<script>
-    $(document).ready(function () {
-        // Bắt sự kiện khi checkbox "Chọn tất cả" thay đổi
-        $("#selectAllCa").change(function () {
-            var selectAll = $(this).is(":checked");
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            // Bắt sự kiện khi checkbox "Buổi sáng" thay đổi
+            $("#buoisang").change(function () {
+                var selectMorning = $(this).is(":checked");
 
-            // Đặt trạng thái của các checkbox ca khám
-            $("input[name='cakham']").prop("checked", selectAll);
+                // Đặt trạng thái của các checkbox ca 123
+                $("input[name='cakham']").filter(function () {
+                    var value = $(this).val();
+                    var number = parseInt(value.slice(1)); // Lấy phần số và chuyển đổi thành số nguyên
+                    return number >= 0 && number <= 2;
+                }).prop("checked", selectMorning);
+            });
+
+            // Bắt sự kiện khi checkbox "Buổi chiều" thay đổi
+            $("#buoichieu").change(function () {
+                var selectAfternoon = $(this).is(":checked");
+
+                // Đặt trạng thái của các checkbox ca 456
+                $("input[name='cakham']").filter(function () {
+                    var value = $(this).val();
+                    var number = parseInt(value.slice(1)); // Lấy phần số và chuyển đổi thành số nguyên
+                    return number >= 3 && number <= 5;
+                }).prop("checked", selectAfternoon);
+            });
+            //    //Bắt sự kiện khi checkbox ca khám thay đổi
+            $("input[name='cakham']").change(function () {
+                // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
+                var AfternoonChecked = 3 === $("input[name='cakham']:checked").length;
+                // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
+                $("#buoichieu").prop("checked", AfternoonChecked);
+            });
+
+
+
+            // Bắt sự kiện khi checkbox "Cả ngày" thay đổi
+            $("#cangay").change(function () {
+                var selectAll = $(this).is(":checked");
+
+                // Đặt trạng thái của tất cả các checkbox ca khám
+                $("input[name='cakham']").prop("checked", selectAll);
+            });
+            //    //Bắt sự kiện khi checkbox ca khám thay đổi
+            $("input[name='cakham']").change(function () {
+                // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
+                var allChecked = $("input[name='cakham']").length === $("input[name='cakham']:checked").length;
+                // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
+                $("#cangay").prop("checked", allChecked);
+            });
         });
 
-        // Bắt sự kiện khi checkbox ca khám thay đổi
-        $("input[name='cakham']").change(function () {
-            // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
-            var allChecked = $("input[name='cakham']").length === $("input[name='cakham']:checked").length;
+        //$(document).ready(function () {
+        //    // Bắt sự kiện khi checkbox "Chọn tất cả" thay đổi 
 
-            // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
-            $("#selectAllCa").prop("checked", allChecked);
-        });
-    });
-</script>
+        //    $("#cangay").change(function () {
+        //        var selectAll = $(this).is(":checked");
+        //        // Đặt trạng thái của các checkbox ca khám
+        //        $("input[name='cakham']").prop("checked", selectAll);
+        //    });
+        //    $("#cakham").change(function () {
+        //        var selectAll = $(this).is(":checked");
+        //        // Đặt trạng thái của các checkbox ca khám
+        //        $("input[name='cakham']").prop("checked", selectAll);
+        //    });
+        //     //Bắt sự kiện khi checkbox ca khám thay đổi
+        //    $("input[name='cakham']").change(function () {
+        //        // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
+        //        var allChecked = $("input[name='cakham']").length === $("input[name='cakham']:checked").length;
+        //        // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
+        //        $("#cangay").prop("checked", allChecked);
+        //    });
+
+        //    // Bắt sự kiện khi checkbox "Chọn tCa sáng" thay đổi 
+
+        //    $("#casang").change(function () {
+        //        var selectSang = $(this).is(":checked");
+        //        // Đặt trạng thái của các checkbox ca khám
+        //        $("input[name='cakham']").prop("checked", selectSang);
+        //    });
+        //    $("#cakham").change(function () {
+        //        var selectAll = $(this).is(":checked");
+        //        // Đặt trạng thái của các checkbox ca khám
+        //        $("input[name='cakham']").prop("checked", selectSang);
+        //    });
+        //    //Bắt sự kiện khi checkbox ca khám thay đổi
+        //    $("input[name='cakham']").change(function () {
+        //        // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
+        //        var allChecked = $("input[name='cakham']").length === $("input[name='cakham']:checked").length;
+        //        // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
+        //        $("#cangay").prop("checked", allChecked);
+        //    });
+        //});
+    </script>
+}
+
 
 
 

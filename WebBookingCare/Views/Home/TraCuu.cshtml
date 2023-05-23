@@ -4,15 +4,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .timkiem {
+        background: #1977cc;
+        padding: 3px;
+        color: #fff;
+        border: none;   
+    }
+        .timkiem:hover {
+            background: #1c84e3;
+            color: #fff;
+        }
+</style>
 <section id="doctors" class="doctors section-bg">
     <div class="container">
 
         <div class="section-title">
-            <h2>Tra cúu phiếu đặt lịch</h2>
+            <h2>Tra cứu phiếu đặt lịch</h2>
         </div>
         <span>Nhập email/sdt</span>
         <input type="text" class="key" name="key" />
-        <a class="timkiem btn btn-success">Tìm kiếm</a>
+        <input class="timkiem " type="submit" value="Tìm kiếm" name="key">
+       
         <hr>
         <div class="danhsach">
             @{Html.Action("_TraCuu");}

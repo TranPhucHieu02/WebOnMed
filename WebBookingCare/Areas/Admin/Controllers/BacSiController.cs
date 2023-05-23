@@ -143,8 +143,6 @@ namespace WebBookingCare.Areas.Admin.Controllers
                 bs.GioiTinh = bacSi.GioiTinh;
                 bs.MaCV = bacSi.MaCV;
                 bs.Sdt = bacSi.Sdt;
-
-                db.Entry(bs).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("DanhSach");
             }
