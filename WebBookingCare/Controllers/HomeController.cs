@@ -120,8 +120,8 @@ namespace WebBookingCare.Controllers
         }
         public JsonResult GetCaKham(string mabs,DateTime ngaykham)
         {
-            var listCaKham = db.caKham.ToList();
-            var listCaKhamOll = db.caKham.ToList();
+            var listCaKham = db.caKham.Where(p=>p.TrangThai==true).ToList();
+            var listCaKhamOll = db.caKham.Where(p => p.TrangThai == true).ToList();
             var donNghiPhep = db.DonNghiPhep.SingleOrDefault(p => p.TrangThai == true && p.MaBS == mabs && p.NgayNghi == ngaykham);
             var phieuDatLich = db.PhieuDatLich.Where(p => p.NgayKham == ngaykham && p.MaBS==mabs).ToList();
             for(int i = 0;i< listCaKhamOll.Count(); i++)

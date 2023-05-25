@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -98,19 +99,36 @@ namespace WebBookingCare.Areas.Admin.Controllers
             return View(caKham);
         }
 
-        // GET: Admin/CaKham/Delete/5
-        public ActionResult XoaCaKham(string id)
+        //GET: Admin/CaKham/Delete/5
+        public ActionResult KhoaCaKham(string maca, string status)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(maca) || string.IsNullOrEmpty(status))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Json(new { success = false, message = "Không tìm thấy thông ca khám." });
             }
-            CaKham caKham = db.caKham.Find(id);
-            db.caKham.Remove(caKham);
-            db.SaveChanges();
-            return RedirectToAction("DanhSach");
+
+            bool trangthai = true;
+            if (status == "unlocked")
+            {
+                trangthai = false;
+
+            }
+
+            using (var db = new ApplicationDbContext())
+            {
+                var caKham = db.caKham.SingleOrDefault(p => p.MaCa == maca);
+                if (caKham == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy thông tin ca khám." });
+                }
+                caKham.TrangThai = trangthai;
+                
+                db.SaveChanges();
+            }
+
+            return Json(new { success = true });
         }
-      
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -25,6 +25,9 @@ namespace WebBookingCare.Models.EF
         [Display(Name = "Tên Ca")]
         public string TenCa { get; set; }
 
+        [Display(Name = "Trạng thái")]
+        public bool TrangThai { get; set; } = true;
+
         [Display(Name = "Thời Gian Bắt Đầu")]
         [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan? ThoiGianBD { get; set; }

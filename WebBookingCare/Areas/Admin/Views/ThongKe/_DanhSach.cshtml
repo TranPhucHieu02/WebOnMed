@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.PhieuDatLich>
+
+<table class="table table-bordered display" id="tablePDL">
+    <thead>
+        <tr>
+            <th>
+                ca khám
+            </th>
+            <th>
+                Bác sĩ
+            </th>
+            <th>
+                Tên bệnh nhân
+            </th>
+
+            <th>
+                Ngày đặt
+            </th>
+            <th>
+                Ngày khám
+            </th>
+            <th>
+                Trạng thái
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CaKham.TenCa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BacSi.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenBN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayDat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayKham)
+                </td>
+                <td>
+                    @{
+                        if (item.TrangThai == 3)
+                        {
+                            <span>Đã hủy</span>
+                        }
+                        if (item.TrangThai == 0)
+                        {
+                            <span>Chưa duyệt</span>
+                        }
+                        else if (item.TrangThai == 1)
+                        {
+                            <span>Đã duyệt</span>
+                        }
+                        else if (item.TrangThai == 2)
+                        {
+                            <span>Đã Khám</span>
+                        }
+
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

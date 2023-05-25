@@ -55,6 +55,15 @@ namespace WebBookingCare.Areas.Admin.Controllers
             var lsLienHe = db.LienHe.ToList();
             return View(lsLienHe);
         }
+        public ActionResult ChiTietLienHe(int id)
+        {
+            if (id == null)
+            {
+                RedirectToAction("lienhe");
+            }
+            var lh = db.LienHe.SingleOrDefault(p => p.MaLH == id);
+            return View(lh);
+        }
 
     }
 }

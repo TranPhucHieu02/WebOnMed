@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.PhieuDatLich>
+
+@{
+    ViewBag.Title = "DanhSach";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">THỐNG KÊ</h4>
+    <hr />
+
+</div>
+<div class="danhsachls">
+    <div class="dsbs m-3">
+        <div>
+            <select name='TrangThai' class="danhsach">
+                <option value="">Tất cả</option>
+                <option value="0">Chưa duyệt</option>
+                <option value="1">Đã duyệt</option>
+                <option value="2">Đã khám</option>
+                <option value="3">Đã hủy</option>
+
+            </select>
+
+        </div>
+            @Html.Partial("_DanhSach")
+        <input type="button" class="excel btn btn-success w-100 h-100"  id="excel" value="Xuất file excel" />
+    </div>
+    </div>
+       
+
+
+
+        @section datatable
+    {
+            <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#tablePDL').DataTable();
+                });
+            </script>
+        }
+
+        @section xuatexcel
+    {
+            <script>
+                $(function () {
+
+                    $('.danhsach').change(function () {
+                        var id = $('.danhsach').val();
+                        $.ajax(
+                            {
+                                url: '/Admin/thongke/_danhsach',
+                                type: 'POST',
+                                data: { id: id },
+                                success: function (data) {
+                                    $('#tablePDL').html(data);
+                                },
+
+                                error: function (err) {
+
+                                    alert(data.msg);
+
+                                }
+                            });
+
+                    })
+                    $('.excel').click(function () {
+                        var id = $('.danhsach').val();
+                        $.ajax(
+                            {
+                                url: '/Admin/thongke/XuatExcel',
+                                type: 'POST',
+                                data: { id: id },
+                                success: function (data) {
+                                    alert(data.msg);
+                                    location.href = '/Content/FileExcel/' + data.msg;
+                                },
+
+                                error: function (err) {
+
+                                    alert(data.msg);
+
+                                }
+                            });
+                    });
+                });
+            </script>
+        }

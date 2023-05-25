@@ -23,6 +23,8 @@ namespace WebBookingCare.Models.EF
 
         [Display(Name = "SDT")]
         public string SDT { get; set; }
+        [Display(Name = "Thời gian")]
+        public DateTime ThoiGian { get; set; }
 
         [StringLength(500)]
         [Display(Name = "Chủ đề")]

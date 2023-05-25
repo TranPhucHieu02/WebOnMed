@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.DonNghiPhep>
+
+@{
+    ViewBag.Title = "DanhSach";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">ĐƠN NGHỈ PHÉP</h4>
+    <hr />
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BacSi.HoTen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayNghi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </th>
+        <th>
+            <span>Ca nghỉ</span>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BacSi.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayNghi)
+        </td>
+        <td>
+            <span>Chưa duyệt</span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CaNghi.Count)
+        </td>
+        <td>
+            
+        </td>
+    </tr>
+}
+
+</table>

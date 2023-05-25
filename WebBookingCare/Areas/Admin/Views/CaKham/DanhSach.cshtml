@@ -60,9 +60,20 @@
                         </a>
 
                         <!-- Xóa -->
-                        <a href="@Url.Action("XoaCaKham", "CaKham", new { id = item.MaCa })" class="btn btn-sm btn-danger delete-confirm">
-                            <span class="bi bi-trash"></span>
-                        </a>
+                        @if (item.TrangThai == true)
+                        {
+                            <button type="button" class="btn btn-outline-success btn-sm toggle-cakham-status"
+                                    data-caid="@item.MaCa" data-status="unlocked">
+                                <i class="fas fa-unlock"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-outline-danger btn-sm toggle-cakham-status"
+                                    data-caid="@item.MaCa" data-status="locked">
+                                <i class="fas fa-lock"></i>
+                            </button>
+                        }
                     </td>
                 </tr>
             }
@@ -74,22 +85,35 @@
     {
     <script>
         $(document).ready(function () {
-            $('.delete-confirm').click(function (event) {
-                event.preventDefault();
-                var url = $(this).attr('href');
-                Swal.fire({
-                    title: 'Bạn chắc chắn muốn xóa?',
-                    text: 'Hành động này không thể hoàn tác!',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Đồng ý',
-                    cancelButtonText: 'Hủy bỏ'
-                }).then(function (result) {
-                    if (result.value) {
-                        // Chuyển hướng đến trang xóa
-                        window.location.href = url;
+            $('.toggle-cakham-status').click(function () {
+                var btn = $(this);
+                var caId = btn.data('caid');
+                var status = btn.data('status');
+                var url = '/admin/cakham/KhoaCaKham';
+                var data = { maca: caId, status: status };
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    success: function (result) {
+                        if (result.success) {
+                            if (status === 'unlocked') {
+                                btn.removeClass('btn-outline-success').addClass('btn-outline-danger');
+                                btn.find('i').removeClass('fas fa-unlock').addClass('fas fa-lock');
+                                btn.find('span').text('Khóa');
+                                btn.data('status', 'locked');
+                            } else {
+                                btn.removeClass('btn-outline-danger').addClass('btn-outline-success');
+                                btn.find('i').removeClass('fas fa-lock').addClass('fas fa-unlock');
+                                btn.find('span').text('Kích Hoạt');
+                                btn.data('status', 'unlocked');
+                            }
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Đã xảy ra lỗi khi cập nhật trạng thái tài khoản.');
                     }
                 });
             });

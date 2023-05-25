@@ -5,11 +5,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>LienHe</h2>
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">PHẢN HỒI NGƯỜI DÙNG</h4>
+    <hr />
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -19,13 +19,7 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SDT)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.ChuDe)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoiDung)
         </th>
         <th></th>
     </tr>
@@ -39,18 +33,10 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SDT)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.ChuDe)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NoiDung)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaLH }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaLH }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaLH })
+            @Html.ActionLink("Xem chi tiết", "ChiTietLienHe", new { id=item.MaLH })
         </td>
     </tr>
 }

@@ -158,5 +158,14 @@ namespace WebBookingCare.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("DanhSach");
         }
+        public string ProcessUpload(HttpPostedFileBase file)
+        {
+            if (file == null)
+            {
+                return "";
+            }
+            file.SaveAs(Server.MapPath("~/assets/admin/img/doctors" + file.FileName));
+            return "/assets/admin/img/doctors" + file.FileName;
+        }
     }
 }
