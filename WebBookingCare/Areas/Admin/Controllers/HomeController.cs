@@ -52,7 +52,7 @@ namespace WebBookingCare.Areas.Admin.Controllers
         }
         public ActionResult LienHe()
         {
-            var lsLienHe = db.LienHe.ToList();
+            var lsLienHe = db.LienHe.ToList().OrderByDescending(p=>p.ThoiGian);
             return View(lsLienHe);
         }
         public ActionResult ChiTietLienHe(int id)

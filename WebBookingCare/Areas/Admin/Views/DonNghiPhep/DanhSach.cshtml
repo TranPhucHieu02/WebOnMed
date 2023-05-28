@@ -4,45 +4,128 @@
     ViewBag.Title = "DanhSach";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 <div class="card-header py-3">
-    <h4 class="m-0 font-weight-bold text-primary text-center">ĐƠN NGHỈ PHÉP</h4>
+    <h4 class="m-0 font-weight-bold text-primary text-center">DUYỆT ĐƠN NGHỈ PHÉP</h4>
     <hr />
 </div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BacSi.HoTen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayNghi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </th>
-        <th>
-            <span>Ca nghỉ</span>
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BacSi.HoTen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayNghi)
-        </td>
-        <td>
-            <span>Chưa duyệt</span>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CaNghi.Count)
-        </td>
-        <td>
-            
-        </td>
-    </tr>
+<div class="noidung m-3">
+    <table class="PDL table table-bordered display " id="PDL">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BacSi.HoTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayNghi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrangThai)
+                </th>
+                <th>
+                    Ca nghỉ
+                </th>
+                <th>
+                    Chức năng
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BacSi.HoTen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayNghi)
+                    </td>
+                    <td>
+                        <span>Chưa duyệt</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CaNghi.Count)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-success btn-sm click-dnp"
+                                data-userid="@item.Id" data-status="add">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger btn-sm click-dnp"
+                                data-userid="@item.Id" data-status="remove">
+                            <i class="fas fa-trash"></i> <!-- Biểu tượng xóa -->
+                        </button>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section datatable
+    {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PDL').DataTable({
+                "drawCallback": function (settings) {
+                    $('.click-dnp').click(function (event) {
+                        event.preventDefault();
+                        var btn = $(this);
+                        var id = btn.data('userid');
+                        var status = btn.data('status');
+                        var url = '/admin/donnghiphep/duyetdon';
+                        var data = { id: id, status: status };
+                        var row = btn.closest('tr');
+                        var title = '';
+                        var text = '';
+                        var type = '';
+                        if (status === 'add') {
+                            title = "Duyệt đơn nghỉ phép";
+                            text = "Không thể hoàn tác hành động!";
+                            type = "success";
+                        } else {
+                            title = 'Bạn chắc chắn muốn xóa?';
+                            text = 'Hành động này không thể hoàn tác!';
+                            type = 'warning';
+                        }
+                        Swal.fire({
+                            title: title,
+                            text: text,
+                            type: type,
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Đồng ý',
+                            cancelButtonText: 'Hủy bỏ'
+                        }).then(function (result) {
+                            if (result.value) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url,
+                                    data: data,
+                                    success: function (result) {
+                                        if (result.success) {
+                                            row.hide();
+                                        } else {
+                                            alert(result.message);
+                                        }
+                                    },
+                                    error: function () {
+                                        alert('Đã xảy ra lỗi khi thực hiện hành động.');
+                                    }
+                                });
+                            }
+                        });
+
+                    });
+                }
+            });
+        });
+    </script>
 }
-
-</table>

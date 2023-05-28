@@ -1,0 +1,37 @@
+﻿@model IEnumerable<WebBookingCare.Models.EF.BacSi>
+<div class="dsbacsi">
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-6 mt-4">
+                <div class="member d-flex align-items-start">
+                    <div class="pic"><img src="@item.Avt" class="img-fluid" alt=""></div>
+                    <div class="member-info">
+                        <h4>@item.HoTen</h4>
+                        <p>@item.Khoa.TenKhoa</p>
+                        <p>@item.ChucVu.TenCV</p>
+                        @{
+                            if (!item.GioiTinh)
+                            {
+
+
+                                <p>Nữ</p>
+                            }
+                            else
+                            {
+                                <p>Nam</p>
+                            }
+                        }
+                        <div class="social">
+                            <a href=""><i class="ri-twitter-fill"></i></a>
+                            <a href=""><i class="ri-facebook-fill"></i></a>
+                            <a href=""><i class="ri-instagram-fill"></i></a>
+                            <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

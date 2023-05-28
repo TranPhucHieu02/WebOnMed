@@ -4,41 +4,64 @@
     ViewBag.Title = "LienHe";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 
 <div class="card-header py-3">
     <h4 class="m-0 font-weight-bold text-primary text-center">PHẢN HỒI NGƯỜI DÙNG</h4>
     <hr />
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.HoTen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChuDe)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.HoTen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChuDe)
-        </td>
-        <td>
-            @Html.ActionLink("Xem chi tiết", "ChiTietLienHe", new { id=item.MaLH })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="noidung m-3">
+    <table class="PDL table table-bordered display " id="PDL">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.HoTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ChuDe)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ThoiGian)
+                </th>
+                <th>
+                    Chức năng
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoTen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChuDe)
+                    </td>
+                    <td>
+                        @item.ThoiGian.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Xem chi tiết", "ChiTietLienHe", new { id = item.MaLH })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section datatable
+    {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PDL').DataTable();
+        });
+    </script>
+    }

@@ -164,12 +164,42 @@ namespace WebBookingCare.Controllers
         {
             ViewBag.Khoa = db.Khoa.ToList();
             ViewBag.ChucVu = db.ChucVu.ToList();
-            var bs = db.BacSi.Where(p=>p.User.DeleteUser == false).ToList();
-            return View("BacSi",bs);
+            var lsBacSi = db.BacSi.Where(p => p.User.DeleteUser == false).ToList();
+            return View(lsBacSi);
         }
-        public ActionResult DichVu()
+        public PartialViewResult _BacS()
         {
-            return View("DichVu", db.DichVu.ToList());
+            ViewBag.DichVu = db.DichVu.Count();
+            ViewBag.BacSi = db.BacSi.Count();
+            ViewBag.Khoa = db.Khoa.Count();
+            ViewBag.CaKham = db.caKham.Count();
+            return PartialView("_ThongKe");
+        }
+        public PartialViewResult _BacSi (string khoa, string chucvu,string gioitinh)
+        {
+            
+            var lsBacSi = db.BacSi.Where(p => p.User.DeleteUser == false).ToList();
+        
+            if (string.IsNullOrEmpty(khoa)&& string.IsNullOrEmpty(chucvu) && string.IsNullOrEmpty(gioitinh.ToString()) ) 
+            {
+                lsBacSi = db.BacSi.Where(p => p.User.DeleteUser == false).ToList();
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(khoa)) 
+                {
+                    lsBacSi = lsBacSi.Where(p => p.Khoa.MaKhoa == khoa).ToList();
+                }
+                if (!string.IsNullOrEmpty(chucvu)) 
+                {
+                    lsBacSi = lsBacSi.Where(p => p.ChucVu.MaCV == chucvu).ToList();
+                }
+                if (!string.IsNullOrEmpty(gioitinh.ToString())) 
+                {
+                    lsBacSi = lsBacSi.Where(p => p.GioiTinh.ToString().Trim() == gioitinh).ToList();
+                }
+            }
+            return PartialView(lsBacSi);
         }
         public PartialViewResult _ThongKe()
         {
