@@ -8,6 +8,7 @@ using WebBookingCare.Models;
 
 namespace WebBookingCare.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class DonNghiPhepController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();

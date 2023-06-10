@@ -200,6 +200,7 @@
     <Compile Include="Areas\Admin\Controllers\CaKhamController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Doctor\Controllers\DonNghiPhepController.cs" />
+    <Compile Include="Areas\Doctor\Controllers\HomeController.cs" />
     <Compile Include="Areas\Doctor\Controllers\PhieuDatLichController.cs" />
     <Compile Include="Areas\Doctor\DoctorAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -2460,6 +2461,8 @@
     <Content Include="Areas\Admin\Views\ThongKe\DanhSach.cshtml" />
     <Content Include="Areas\Admin\Views\ThongKe\_DanhSach.cshtml" />
     <Content Include="Areas\Admin\Views\DonNghiPhep\DanhSach.cshtml" />
+    <Content Include="Areas\Doctor\Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\phuchieu2002-001-site1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

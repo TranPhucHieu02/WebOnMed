@@ -49,7 +49,11 @@
                         <span>Chưa duyệt</span>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CaNghi.Count)
+                        |
+                        @foreach (var ca in item.CaNghi)
+                        {
+                            <span>@ca.CaKham.TenCa | </span>
+                        }
                     </td>
                     <td>
                         <button type="button" class="btn btn-outline-success btn-sm click-dnp"

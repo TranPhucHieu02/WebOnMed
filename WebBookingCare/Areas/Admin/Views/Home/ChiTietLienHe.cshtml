@@ -5,55 +5,81 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>ChiTietLienHe</h2>
+<link href="~/assets/vendor/css/core.css" rel="stylesheet" />
+<style>
+    .tenbenhnhan {
+        text-align: center;
+        text-transform: uppercase;
+    }
 
-<div>
-    <h4>LienHe</h4>
+        .tenbenhnhan h4 {
+            font-weight: bold;
+        }
+
+    .tentruong {
+        font-weight: bold;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid black; /* Viền đen với độ dày 1px */
+        padding: 10px; /* Khoảng đệm 5px */
+        white-space: pre-line;
+        width: 33.33%;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f2f2f2; /* Màu nền cho tiêu đề */
+    }
+</style>
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary text-center">CHI TIẾT LIÊN HỆ</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.HoTen)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HoTen)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SDT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SDT)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ChuDe)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ChuDe)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NoiDung)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NoiDung)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaLH }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="d-flex justify-content-center">
+    <div class="col-md-10">
+
+        <div class="card">
+
+            <div class="Thongtinbn m-5">
+                <div class="tenbenhnhan">
+                    <h4> @Model.HoTen</h4>
+                </div>
+                <!--========================Thông tin bệnh nhân ================================================-->
+                <div class="row">
+                    <div class="col-md-4 p-3">
+                        <span class="tentruong">Email:</span> @Model.Email
+                    </div>
+                    <div class="col-md-4 p-3">
+                        <span class="tentruong">Số điện thoại</span> @Model.SDT
+                    </div>
+                    <div class="col-md-4 p-3">
+                        <span class="tentruong">Ngày gửi:</span> @Model.ThoiGian.ToString("dd/MM/yyyy")
+                    </div>
+                </div>
+                <hr />
+                <br />
+                <div class="row">
+                    <table>
+                        <tr>
+                            <th>Tiêu đề</th>
+                            <th>Nội dung</th>
+                        </tr>
+                        <tr>
+                            <td>@Model.ChuDe</td>
+                            <td>@Model.NoiDung</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

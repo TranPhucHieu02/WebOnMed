@@ -87,6 +87,7 @@ namespace WebBookingCare.Controllers
             lh.SDT = lienHe.SDT;
             lh.ChuDe = lienHe.ChuDe;
             lh.NoiDung = lienHe.NoiDung;
+            lh.ThoiGian = DateTime.Now;
             db.LienHe.Add(lh);
             db.SaveChanges();
             return View();
@@ -196,7 +197,7 @@ namespace WebBookingCare.Controllers
                 }
                 if (!string.IsNullOrEmpty(gioitinh.ToString())) 
                 {
-                    lsBacSi = lsBacSi.Where(p => p.GioiTinh.ToString().Trim() == gioitinh).ToList();
+                    lsBacSi = lsBacSi.Where(p => p.GioiTinh.ToString().ToUpper() == gioitinh.ToString().ToUpper()).ToList();
                 }
             }
             return PartialView(lsBacSi);

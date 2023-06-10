@@ -80,8 +80,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <span class="font-weight-bold control-label col-md-2">Chọn ca</span>
-                            <div class="col-md-10">
+                            <span class="font-weight-bold control-label col-md-2">Thời gian</span>
+                            <div class="col-md-10 " >
                                 @foreach (var caKham in ViewBag.CaKhamList)
                                 {
                                     <div>
@@ -113,18 +113,32 @@
             // Bắt sự kiện khi checkbox "Buổi sáng" thay đổi
             $("#buoisang").change(function () {
                 var selectMorning = $(this).is(":checked");
-
+                // dặt lại mặc định
+                $("#buoichieu,#cangay").prop("checked", false)
+                $("input[name='cakham']").filter(function () {
+                    var value = $(this).val();
+                    var number = parseInt(value.slice(1)); // Lấy phần số và chuyển đổi thành số nguyên
+                    return number >= 0 && number <= 5;
+                }).prop("checked", false);
                 // Đặt trạng thái của các checkbox ca 123
                 $("input[name='cakham']").filter(function () {
                     var value = $(this).val();
                     var number = parseInt(value.slice(1)); // Lấy phần số và chuyển đổi thành số nguyên
                     return number >= 0 && number <= 2;
                 }).prop("checked", selectMorning);
+                
             });
 
             // Bắt sự kiện khi checkbox "Buổi chiều" thay đổi
             $("#buoichieu").change(function () {
                 var selectAfternoon = $(this).is(":checked");
+                // dặt lại mặc định
+                $("#buoisang,#cangay").prop("checked", false)
+                $("input[name='cakham']").filter(function () {
+                    var value = $(this).val();
+                    var number = parseInt(value.slice(1)); // Lấy phần số và chuyển đổi thành số nguyên
+                    return number >= 0 && number <= 5;
+                }).prop("checked", false);
 
                 // Đặt trạng thái của các checkbox ca 456
                 $("input[name='cakham']").filter(function () {
@@ -146,6 +160,13 @@
             // Bắt sự kiện khi checkbox "Cả ngày" thay đổi
             $("#cangay").change(function () {
                 var selectAll = $(this).is(":checked");
+                // dặt lại mặc định
+                $("#buoichieu,#buoisang").prop("checked", false)
+                $("input[name='cakham']").filter(function () {
+                    var value = $(this).val();
+                    var number = parseInt(value.slice(1)); // Lấy phần số và chuyển đổi thành số nguyên
+                    return number >= 0 && number <= 5;
+                }).prop("checked", false);
 
                 // Đặt trạng thái của tất cả các checkbox ca khám
                 $("input[name='cakham']").prop("checked", selectAll);
@@ -159,47 +180,6 @@
             });
         });
 
-        //$(document).ready(function () {
-        //    // Bắt sự kiện khi checkbox "Chọn tất cả" thay đổi 
-
-        //    $("#cangay").change(function () {
-        //        var selectAll = $(this).is(":checked");
-        //        // Đặt trạng thái của các checkbox ca khám
-        //        $("input[name='cakham']").prop("checked", selectAll);
-        //    });
-        //    $("#cakham").change(function () {
-        //        var selectAll = $(this).is(":checked");
-        //        // Đặt trạng thái của các checkbox ca khám
-        //        $("input[name='cakham']").prop("checked", selectAll);
-        //    });
-        //     //Bắt sự kiện khi checkbox ca khám thay đổi
-        //    $("input[name='cakham']").change(function () {
-        //        // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
-        //        var allChecked = $("input[name='cakham']").length === $("input[name='cakham']:checked").length;
-        //        // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
-        //        $("#cangay").prop("checked", allChecked);
-        //    });
-
-        //    // Bắt sự kiện khi checkbox "Chọn tCa sáng" thay đổi 
-
-        //    $("#casang").change(function () {
-        //        var selectSang = $(this).is(":checked");
-        //        // Đặt trạng thái của các checkbox ca khám
-        //        $("input[name='cakham']").prop("checked", selectSang);
-        //    });
-        //    $("#cakham").change(function () {
-        //        var selectAll = $(this).is(":checked");
-        //        // Đặt trạng thái của các checkbox ca khám
-        //        $("input[name='cakham']").prop("checked", selectSang);
-        //    });
-        //    //Bắt sự kiện khi checkbox ca khám thay đổi
-        //    $("input[name='cakham']").change(function () {
-        //        // Kiểm tra xem tất cả các checkbox ca khám đã được chọn hay chưa
-        //        var allChecked = $("input[name='cakham']").length === $("input[name='cakham']:checked").length;
-        //        // Đặt trạng thái checkbox "Chọn tất cả" dựa trên trạng thái của các checkbox ca khám
-        //        $("#cangay").prop("checked", allChecked);
-        //    });
-        //});
     </script>
 }
 

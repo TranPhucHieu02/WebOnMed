@@ -134,7 +134,7 @@ namespace WebBookingCare.Areas.Admin.Controllers
             
             if (ModelState.IsValid)
             {
-                var bs = new BacSi();
+                var bs = db.BacSi.SingleOrDefault(p=>p.MaBS == bacSi.MaBS);
                 bs.MaBS = bacSi.MaBS;
                 bs.HoTen = bacSi.HoTen;
                 bs.MaKhoa = bacSi.MaKhoa;
